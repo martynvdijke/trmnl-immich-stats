@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.3...v1.0.4) (2026-08-15)
+
+
+### Bug Fixes
+
+* **trmnl:** pin plugin id 443892 ([f99ffb2](https://github.com/martynvdijke/trmnl-immich-stats/commit/f99ffb2ad66f444965778ce46371a891402c388d))
+
 ## [1.0.3](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.2...v1.0.3) (2026-08-15)
 
 
