@@ -48,3 +48,5 @@ jobs:
       - run: trmnlp push --force --dir trmnl
         env:
           TRMNL_API_KEY: ${{ secrets.TRML_TOKEN }}
+
+# NOTE: bootstrap retry after transient 404 on 2026-08-15
