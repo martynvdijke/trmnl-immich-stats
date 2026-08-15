@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.1...v1.0.2) (2026-08-15)
+
+
+### Bug Fixes
+
+* **trmnl:** retry plugin bootstrap after transient 404 ([0c90a18](https://github.com/martynvdijke/trmnl-immich-stats/commit/0c90a18d935ef8e97adec7deaedc99f68e1ed6b6))
+
 ## [1.0.1](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.0...v1.0.1) (2026-08-15)
 
 
