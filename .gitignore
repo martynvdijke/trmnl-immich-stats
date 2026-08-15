@@ -1,0 +1,30 @@
+# Binaries
+main
+trmnl-immich-stats
+trmnl-immich-stats-go
+
+# Databases
+db.*
+*.db
+*.sqlite3
+
+# Go
+*.test
+*.out
+coverage
+coverage.out
+
+# Build & tooling
+tmp/
+dist/
+*.log
+build-errors.log
+
+# Environment
+.env
+.env.*
+
+# OpenSpec local changes (not committed; see https://openspec.dev)
+openspec/
+.opencode/
+trmnl/_build/

@@ -1,0 +1,32 @@
+<div class="layout layout--col gap">
+  <div class="grid grid--cols-2">
+    <div class="item">
+      <span class="value value--large">{{ IDX_0.photos }}</span>
+      <span class="label label--small">Photos</span>
+    </div>
+    <div class="item">
+      <span class="value value--large">{{ IDX_0.videos }}</span>
+      <span class="label label--small">Videos</span>
+    </div>
+    <div class="item">
+      <span class="value value--large">{{ IDX_0.usage_human }}</span>
+      <span class="label label--small">Storage</span>
+    </div>
+    <div class="item">
+      <span class="value value--large">v{{ IDX_0.version_full }}</span>
+      <span class="label label--small">Version</span>
+    </div>
+  </div>
+  {% if IDX_0.usage_by_user.size > 1 %}
+    <div class="hr"></div>
+    {% for user in IDX_0.usage_by_user %}
+      <div class="layout layout--row">
+        <span class="value value--small">{{ user.user_name }}</span>
+        <span class="value value--small">{{ user.usage_human }}</span>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <div class="title_bar">
+    <span class="title">Immich Stats</span>
+  </div>
+</div>
