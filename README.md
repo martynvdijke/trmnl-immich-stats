@@ -7,64 +7,51 @@ versions.
 
 ## How it works
 
+This plugin polls your Immich server **directly** — no backend to host:
+
 ```
-┌──────────┐   polling   ┌────────────────────┐  x-api-key  ┌─────────┐
-│ TRMNL    │ ──────────► │ trmnl-immich-stats │ ──────────► │ Immich  │
-│ device   │ ◄────────── │ Go backend         │ ◄────────── │ server  │
-└──────────┘     JSON    └────────────────────┘             └─────────┘
+┌──────────┐   polling (x-api-key)   ┌─────────┐
+│ TRMNL    │ ──────────────────────► │ Immich  │
+│ device   │ ◄────────────────────── │ server  │
+└──────────┘       JSON + transform  └─────────┘
 ```
 
-Immich requires an API key (`x-api-key` header) for every request, which the
-TRMNL device cannot hold. This Go backend fetches and combines four Immich
-endpoints into a single TRMNL-pollable payload:
-
-- `GET /api/server/statistics` — photo/video counts and storage usage
-  (total and per user).
-- `GET /api/server/version` — server version.
-- `GET /api/server/about` — build info, license flag, media stack versions.
-- `GET /api/server/license` — license/product key data.
-
-The `trmnl/` directory is a [trmnlp](https://github.com/owise1/trmnlp) plugin
-project (Liquid templates + settings) that is pushed to your TRMNL plugin via
-`trmnlp push`.
-
-## Configuration
-
-| Variable         | Required | Default | Description                     |
-| ---------------- | -------- | ------- | ------------------------------- |
-| `IMMICH_URL`     | yes      | —       | Base URL of your Immich server  |
-| `IMMICH_API_KEY` | yes      | —       | Immich API key                  |
-| `PORT`           | no       | `8080`  | HTTP listen port                |
-
-## Run
-
-```sh
-# from source
-go run .
-
-# or with docker
-docker compose up -d
-```
+The plugin polls four Immich read endpoints (statistics, version, about,
+license) using an API key you store in a custom field. A small
+[trmnlp](https://github.com/owise1/trmnlp) transform script
+(`trmnl/src/transform.py`) merges the four responses into one payload the
+Liquid templates render — including human-readable storage sizes.
 
 ## TRMNL plugin setup
 
-1. Host this backend somewhere public (`https://<backend>/healthz` should
-   return `ok`).
-2. Create a new plugin in the TRMNL dashboard (or push via `trmnlp push`) with
-   polling URL `https://<backend>/api/trmnl/stats`.
-3. Set the **url** custom field to the public backend URL.
-4. Set the refresh interval to 60 minutes (or lower) for fresh stats.
-
-For local development, run `trmnlp serve` inside `trmnl/`.
+1. Create a new plugin in the TRMNL dashboard (or push via `trmnlp push`) with
+   polling URL `https://your-immich.example.com/api/server/statistics` — the
+   transform handles the rest.
+2. Set the custom fields:
+   - **url** — the base URL of your Immich server (required).
+   - **api_key** — an Immich API key (required). Create one in Immich under
+     Account Settings > API Keys.
+3. Set the refresh interval to 60 minutes (or lower) for fresh stats.
 
 ## Development
 
 ```sh
-task setup   # download Go modules
-task dev     # run with air (auto-reload)
-task test    # run unit tests
-task build   # build the binary
+cd trmnl
+# validate the transform against a sample payload
+python3 src/transform.py < test/fixture.json
+
+# preview the plugin (requires trmnlp with transform support, Ruby >= 4.0)
+trmnlp serve
 ```
+
+## Security notes
+
+- Your Immich API key is stored in the TRMNL plugin custom fields and is sent
+  as the `x-api-key` header on every poll. Only use a read-only API key.
+- Transform scripts run by default when you clone or pull a plugin. This
+  plugin's `src/transform.py` is safe, but review any third-party plugin's
+  transform script before serving it — or set `transform_runtime: disabled`
+  in `.trmnlp.yml`.
 
 ## License
 

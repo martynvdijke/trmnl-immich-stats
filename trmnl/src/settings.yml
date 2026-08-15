@@ -4,9 +4,9 @@ dark_mode: 'no'
 static_data: ''
 polling_verb: get
 framework_version: 2.3.7
-serverless_language: ''
-polling_url: "{{url}}/api/trmnl/stats"
-polling_headers: ''
+serverless_language: python
+polling_url: "{{url}}/api/server/statistics\n{{url}}/api/server/version\n{{url}}/api/server/about\n{{url}}/api/server/license"
+polling_headers: 'x-api-key={{api_key}}'
 polling_body: ''
 id: ''
 oauth_enabled: 'false'
@@ -31,11 +31,17 @@ oauth_expiry_strategy: ''
 oauth_fixed_expiry_ms: ''
 custom_fields:
   - keyname: url
-    name: 'Address of the trmnl-immich-stats backend'
+    name: 'Address of the Immich server'
     field_type: url
-    description: 'The public URL of your trmnl-immich-stats backend'
+    description: 'The base URL of your Immich server'
     placeholder: 'https://immich.example.com'
     help_text: 'Please include http:// or https://'
+  - keyname: api_key
+    name: 'Immich API Key'
+    field_type: text
+    description: 'API key for your Immich server'
+    placeholder: 'Your Immich API key'
+    help_text: 'Create one in Immich: Account Settings > API Keys'
 name: 'Immich Server Stats'
-description: 'Storage usage and version of your Immich server'
+description: 'Immich storage and server stats'
 refresh_interval: 60

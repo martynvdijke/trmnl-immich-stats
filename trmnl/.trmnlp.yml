@@ -6,9 +6,13 @@ watch:
   - .trmnlp.yml
   - src
 
+# transform scripts run by default; set to `disabled` to turn them off
+transform_runtime: enabled
+
 # values of custom fields (defined in src/settings.yml)
 custom_fields:
   url: ""
+  api_key: ""
 
 # override variables
 variables:
