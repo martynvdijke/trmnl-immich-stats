@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.2...v1.0.3) (2026-08-15)
+
+
+### Bug Fixes
+
+* **trmnl:** use null plugin id so bootstrap can create plugin ([a8e57b8](https://github.com/martynvdijke/trmnl-immich-stats/commit/a8e57b8473c09e83c23706bc5d5eefaa1c1fcf99))
+
 ## [1.0.2](https://github.com/martynvdijke/trmnl-immich-stats/compare/v1.0.1...v1.0.2) (2026-08-15)
 
 
